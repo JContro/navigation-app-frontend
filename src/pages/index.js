@@ -8,21 +8,21 @@ import Button from '@components/Button';
 
 import styles from '@styles/Home.module.scss';
 
-const DEFAULT_CENTER = [38.907132, -77.036546]
+const DEFAULT_CENTER = [51.51297635567389, -0.117451976654785]
 
 export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>Next.js Leaflet Starter</title>
-        <meta name="description" content="Create mapping apps with Next.js Leaflet Starter" />
+        <title>Deception in Navigation Application</title>
+        <meta name="description" content="Deception in Navigation App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Section>
         <Container>
           <h1 className={styles.title}>
-            Next.js Leaflet Starter
+          Deception in Navigation Application
           </h1>
 
           <Map className={styles.homeMap} width="800" height="400" center={DEFAULT_CENTER} zoom={12}>
@@ -34,7 +34,7 @@ export default function Home() {
                 />
                 <Marker position={DEFAULT_CENTER}>
                   <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
+                    Some delicious text to add here if helpful
                   </Popup>
                 </Marker>
               </>
@@ -42,11 +42,12 @@ export default function Home() {
           </Map>
 
           <p className={styles.description}>
-            <code className={styles.code}>npx create-next-app -e https://github.com/colbyfayock/next-leaflet-starter</code>
+            <code className={styles.code}>Start by adding some deception</code>
           </p>
 
           <p className={styles.view}>
-            <Button href="https://github.com/colbyfayock/next-leaflet-starter">Vew on GitHub</Button>
+            Some scenario here
+            {/* <Button href="https://github.com/colbyfayock/next-leaflet-starter">Vew on GitHub</Button> */}
           </p>
         </Container>
       </Section>
