@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
 import Leaflet from 'leaflet';
 import * as ReactLeaflet from 'react-leaflet';
-import { Marker, Popup, Circle, CircleMarker, Polyline, Polygon, Rectangle } from 'react-leaflet'; 
+import { Marker, Popup, Circle, CircleMarker, Polyline, Polygon, Rectangle, LayersControl, LayerGroup } from 'react-leaflet'; 
 import 'leaflet/dist/leaflet.css';
 
 import styles from './Map.module.scss';
+import { useData } from '../../hooks/useData';
 
 const { MapContainer, useMapEvents } = ReactLeaflet;
 
 const Map = ({ children, className, width, height, ...rest }) => {
+
+  
+
   let mapClassName = styles.map;
 
   if ( className ) {
     mapClassName = `${mapClassName} ${className}`;
   }
-  const center = [51.505, -0.09]
+  
 
   const polyline = [
     [51.505, -0.09],
@@ -65,6 +69,7 @@ const Map = ({ children, className, width, height, ...rest }) => {
   const purpleOptions = { color: 'purple' }
   const redOptions = { color: 'red' }
 
+
   useEffect(() => {
     (async function init() {
       delete Leaflet.Icon.Default.prototype._getIconUrl;
@@ -76,17 +81,24 @@ const Map = ({ children, className, width, height, ...rest }) => {
     })();
   }, []);
 
+
+
+  const { data, isLoading, isError } = useData();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading data.</p>;
+
+
+  const center = data;
+
   function LocationMarker() {
-    const [position, setPosition] = useState(null)
+    const [position, setPosition] = useState(null);
     const map = useMapEvents({
-      click() {
-        map.locate()
+      click(e) {
+        setPosition(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
       },
-      locationfound(e) {
-        setPosition(e.latlng)
-        map.flyTo(e.latlng, map.getZoom())
-      },
-    })
+    });
   
     return position === null ? null : (
       <Marker position={position}>
@@ -97,17 +109,25 @@ const Map = ({ children, className, width, height, ...rest }) => {
 
   return (
     <MapContainer className={mapClassName} {...rest}>
-      {children(ReactLeaflet, Leaflet)}
-      <LocationMarker />
-      <Circle center={center} pathOptions={fillBlueOptions} radius={200} />
-      <CircleMarker center={[51.51, -0.12]} pathOptions={redOptions} radius={20}>
-        <Popup>Popup in CircleMarker</Popup>
-      </CircleMarker>
-      <Polyline pathOptions={limeOptions} positions={polyline} />
-      <Polyline pathOptions={limeOptions} positions={multiPolyline} />
-      <Polygon pathOptions={purpleOptions} positions={polygon} />
-      <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
-      <Rectangle bounds={rectangle} pathOptions={blackOptions} />
+      <LayersControl position="topright">
+        {children(ReactLeaflet, Leaflet)}
+        <LocationMarker />
+        <LayersControl.Overlay name="Circle">
+          <LayerGroup>
+            <Circle center={center} pathOptions={fillBlueOptions} radius={200} />
+            <CircleMarker center={data} pathOptions={redOptions} radius={20}>
+              <Popup>Popup in CircleMarker</Popup>
+            </CircleMarker>
+          </LayerGroup>
+        </LayersControl.Overlay>
+        
+        <Polyline pathOptions={limeOptions} positions={polyline} />
+        <Polyline pathOptions={limeOptions} positions={multiPolyline} />
+        <Polygon pathOptions={purpleOptions} positions={polygon} />
+        <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
+        <Rectangle bounds={rectangle} pathOptions={blackOptions} />
+      </LayersControl>
+      
     </MapContainer>
   )
 }
