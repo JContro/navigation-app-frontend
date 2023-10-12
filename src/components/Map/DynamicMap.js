@@ -92,19 +92,22 @@ const Map = ({ children, className, width, height, ...rest }) => {
   const center = data;
 
   function LocationMarker() {
-    const [position, setPosition] = useState(null);
+    const [markers, setMarkers] = useState([]);
     const map = useMapEvents({
       click(e) {
-        setPosition(e.latlng);
-        map.flyTo(e.latlng, map.getZoom());
+        if (markers.length < 3) {
+          const newMarkers = [...markers, e.latlng];
+          setMarkers(newMarkers);
+          map.flyTo(e.latlng, map.getZoom());
+        }
       },
     });
-  
-    return position === null ? null : (
-      <Marker position={position}>
-        <Popup>You are here</Popup>
+    
+    return markers.map((position, idx) => (
+      <Marker key={idx} position={position}>
+        <Popup>{idx === 0 ? 'Start' : idx === 1 ? 'End' : 'Waypoint'}</Popup>
       </Marker>
-    )
+    ));
   }
 
   return (
