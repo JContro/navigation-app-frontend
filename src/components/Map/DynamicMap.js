@@ -112,8 +112,8 @@ const Map = ({ children, className, width, height, ...rest }) => {
 
   return (
     <MapContainer className={mapClassName} {...rest}>
+      {children(ReactLeaflet, Leaflet)}
       <LayersControl position="topright">
-        {children(ReactLeaflet, Leaflet)}
         <LocationMarker />
         <LayersControl.Overlay name="Circle">
           <LayerGroup>

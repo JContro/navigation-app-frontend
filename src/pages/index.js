@@ -4,7 +4,6 @@ import Layout from '@components/Layout';
 import Section from '@components/Section';
 import Container from '@components/Container';
 import Map from '@components/Map';
-import Button from '@components/Button';
 
 import styles from '@styles/Home.module.scss';
 
@@ -19,12 +18,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      
+        
+      
+
       <Section>
         <Container>
           <h1 className={styles.title}>
           Deception in Navigation Application
           </h1>
-
+          <Section>
+        <Container>
+          <p className={styles.description}>
+            Click on the map 3 times to set the start, waypoint, and end points.
+          </p>
+        </Container>
+      </Section>  
           <Map className={styles.homeMap} width="800" height="400" center={DEFAULT_CENTER} zoom={12}>
             {({ TileLayer, Marker, Popup }) => (
               <>
