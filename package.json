@@ -27,5 +27,8 @@
     "react-leaflet": "^4.2.1",
     "sass": "^1.66.1",
     "swr": "^2.2.4"
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

@@ -18,10 +18,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      
-        
-      
-
       <Section>
         <Container>
           <h1 className={styles.title}>
@@ -30,7 +26,7 @@ export default function Home() {
           <Section>
         <Container>
           <p className={styles.description}>
-            Click on the map 3 times to set the start, waypoint, and end points.
+            Click on the map to set the START, WAYPOINT, and END points.
           </p>
         </Container>
       </Section>  
