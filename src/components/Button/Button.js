@@ -1,9 +1,12 @@
-import Link from 'next/link';
-import styles from './Button.module.scss';
+import Link from "next/link";
+import styles from "./Button.module.scss";
 
-const Button = ({children, href, className, ...rest}) => {
+const Button = ({ children, href, className, variant, ...rest }) => {
   let buttonClassName = styles.button;
 
+  if (variant == "secondary") {
+    buttonClassName = `${buttonClassName} ${styles.secondary}`;
+  }
   if (className) {
     buttonClassName = `${buttonClassName} ${className}`;
   }
@@ -14,7 +17,7 @@ const Button = ({children, href, className, ...rest}) => {
   };
 
   if (href) {
-    if ( href.startsWith('/') ) {
+    if (href.startsWith("/")) {
       return (
         <Link href={href} {...buttonProps}>
           {children}
@@ -28,11 +31,7 @@ const Button = ({children, href, className, ...rest}) => {
     );
   }
 
-  return (
-    <button {...buttonProps}>
-      {children}
-    </button>
-  );
+  return <button {...buttonProps}>{children}</button>;
 };
 
 export default Button;

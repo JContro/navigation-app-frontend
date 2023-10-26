@@ -1,7 +1,8 @@
-import '@styles/globals.scss'
+import "@styles/globals.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;
