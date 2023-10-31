@@ -22,7 +22,6 @@ export default function Home() {
   const compute = () => {
     if (markers.length === 3) {
       setComputeEvent(Date.now()); // or any other unique value
-      console.log(markers.length);
     } else {
       toast.error("You have not selected three points: start, waypoint, end");
     }

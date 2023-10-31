@@ -2,12 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Polyline } from "react-leaflet";
 import { useData } from "src/hooks/useData";
 
-const polyline = [
-  [51.505, -0.09],
-  [51.51, -0.1],
-  [51.51, -0.12],
-];
-
 const limeOptions = { color: "lime" };
 
 const RouteComponent = ({ computeEvent, markers }) => {
@@ -40,7 +34,10 @@ const RouteComponent = ({ computeEvent, markers }) => {
   const { data, isLoading, isError } = useData(url, "POST", apiBody);
   console.log(data);
 
-  return <Polyline pathOptions={limeOptions} positions={polyline} />;
+  // If data is loading or there's an error, set positions to an empty array, otherwise use the data
+  const positions = isLoading || isError || !data ? [] : data;
+
+  return <Polyline pathOptions={limeOptions} positions={positions} />;
 };
 
 export default RouteComponent;
